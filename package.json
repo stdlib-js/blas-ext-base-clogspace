@@ -41,6 +41,7 @@
     "url": "https://github.com/stdlib-js/stdlib/issues"
   },
   "dependencies": {
+    "@stdlib/array-float32": "^0.2.3",
     "@stdlib/assert-is-error": "^0.2.3",
     "@stdlib/blas-base-shared": "^0.2.1",
     "@stdlib/complex-float32-ctor": "^0.1.1",
@@ -56,6 +57,7 @@
     "@stdlib/napi-argv-int64": "^0.2.3",
     "@stdlib/napi-argv-strided-complex64array": "^0.2.3",
     "@stdlib/napi-export": "^0.3.1",
+    "@stdlib/number-float64-base-to-float32": "^0.2.3",
     "@stdlib/strided-base-reinterpret-complex64": "^0.2.2",
     "@stdlib/strided-base-stride2offset": "^0.1.1",
     "@stdlib/types": "^0.5.1",
