@@ -35,38 +35,32 @@ limitations under the License.
 
 > Fill a single-precision complex floating-point strided array with logarithmically spaced values over a specified interval.
 
+<section class="installation">
 
+## Installation
+
+```bash
+npm install @stdlib/blas-ext-base-clogspace
+```
+
+Alternatively,
+
+-   To load the package in a website via a `script` tag without installation and bundlers, use the [ES Module][es-module] available on the [`esm`][esm-url] branch (see [README][esm-readme]).
+-   If you are using Deno, visit the [`deno`][deno-url] branch (see [README][deno-readme] for usage intructions).
+-   For use in Observable, or in browser/node environments, use the [Universal Module Definition (UMD)][umd] build available on the [`umd`][umd-url] branch (see [README][umd-readme]).
+
+The [branches.md][branches-url] file summarizes the available branches and displays a diagram illustrating their relationships.
+
+To view installation and usage instructions specific to each branch build, be sure to explicitly navigate to the respective README files on each branch, as linked to above.
+
+</section>
 
 <section class="usage">
 
 ## Usage
 
-To use in Observable,
-
 ```javascript
-clogspace = require( 'https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-clogspace@umd/browser.js' )
-```
-
-To vendor stdlib functionality and avoid installing dependency trees for Node.js, you can use the UMD server build:
-
-```javascript
-var clogspace = require( 'path/to/vendor/umd/blas-ext-base-clogspace/index.js' )
-```
-
-To include the bundle in a webpage,
-
-```html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-clogspace@umd/browser.js"></script>
-```
-
-If no recognized module system is present, access bundle contents via the global scope:
-
-```html
-<script type="text/javascript">
-(function () {
-    window.clogspace;
-})();
-</script>
+var clogspace = require( '@stdlib/blas-ext-base-clogspace' );
 ```
 
 #### clogspace( N, base, start, stop, endpoint, x, strideX )
@@ -222,16 +216,11 @@ clogspace.ndarray( 3, 10.0, strt, stp, true, x, 1, x.length-3 );
 
 <!-- eslint no-undef: "error" -->
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<body>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/array-complex64@umd/browser.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/complex-float32-ctor@umd/browser.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/console-log-each@umd/browser.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-clogspace@umd/browser.js"></script>
-<script type="text/javascript">
-(function () {
+```javascript
+var Complex64Array = require( '@stdlib/array-complex64' );
+var Complex64 = require( '@stdlib/complex-float32-ctor' );
+var logEach = require( '@stdlib/console-log-each' );
+var clogspace = require( '@stdlib/blas-ext-base-clogspace' );
 
 var x = new Complex64Array( 6 );
 
@@ -240,11 +229,6 @@ var stp = new Complex64( 5.0, 0.0 );
 
 clogspace( x.length, 10.0, strt, stp, true, x, 1 );
 logEach( '%s', x );
-
-})();
-</script>
-</body>
-</html>
 ```
 
 </section>
@@ -253,7 +237,138 @@ logEach( '%s', x );
 
 <!-- C interface documentation. -->
 
+* * *
 
+<section class="c">
+
+## C APIs
+
+<!-- Section to include introductory text. Make sure to keep an empty line after the intro `section` element and another before the `/section` close. -->
+
+<section class="intro">
+
+</section>
+
+<!-- /.intro -->
+
+<!-- C usage documentation. -->
+
+<section class="usage">
+
+### Usage
+
+```c
+#include "stdlib/blas/ext/base/clogspace.h"
+```
+
+#### stdlib_strided_clogspace( N, base, start, stop, endpoint, \*X, strideX )
+
+Fills a single-precision complex floating-point strided array with logarithmically spaced values over a specified interval.
+
+```c
+#include "stdlib/complex/float32/ctor.h"
+#include <stdbool.h>
+
+float x[] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+
+stdlib_strided_clogspace( 4, 10.0f, stdlib_complex64( 0.0f, 0.0f ), stdlib_complex64( 3.0f, 0.0f ), true, (stdlib_complex64_t *)x, 1 );
+```
+
+The function accepts the following arguments:
+
+-   **N**: `[in] CBLAS_INT` number of indexed elements.
+-   **base**: `[in] float` base of the logarithmic scale.
+-   **start**: `[in] stdlib_complex64_t` exponent of the starting value.
+-   **stop**: `[in] stdlib_complex64_t` exponent of the final value.
+-   **endpoint**: `[in] bool` boolean indicating whether to include the `base^stop` value when writing values to the input array. If `true`, the input array is filled with logarithmically spaced values over the closed interval `[base^start, base^stop]`. If `false`, the input array is filled with logarithmically spaced values over the half-open interval `[base^start, base^stop)`.
+-   **X**: `[out] stdlib_complex64_t*` input array.
+-   **strideX**: `[in] CBLAS_INT` stride length.
+
+```c
+void stdlib_strided_clogspace( const CBLAS_INT N, const float base, const stdlib_complex64_t start, const stdlib_complex64_t stop, const bool endpoint, stdlib_complex64_t *X, const CBLAS_INT strideX );
+```
+
+<!-- lint disable maximum-heading-length -->
+
+#### stdlib_strided_clogspace_ndarray( N, base, start, stop, endpoint, \*X, strideX, offsetX )
+
+Fills a single-precision complex floating-point strided array with logarithmically spaced values over a specified interval using alternative indexing semantics.
+
+```c
+#include "stdlib/complex/float32/ctor.h"
+#include <stdbool.h>
+
+float x[] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+
+stdlib_strided_clogspace_ndarray( 4, 10.0f, stdlib_complex64( 0.0f, 0.0f ), stdlib_complex64( 3.0f, 0.0f ), true, (stdlib_complex64_t *)x, 1, 0 );
+```
+
+The function accepts the following arguments:
+
+-   **N**: `[in] CBLAS_INT` number of indexed elements.
+-   **base**: `[in] float` base of the logarithmic scale.
+-   **start**: `[in] stdlib_complex64_t` exponent of the starting value.
+-   **stop**: `[in] stdlib_complex64_t` exponent of the final value.
+-   **endpoint**: `[in] bool` boolean indicating whether to include the `base^stop` value when writing values to the input array. If `true`, the input array is filled with logarithmically spaced values over the closed interval `[base^start, base^stop]`. If `false`, the input array is filled with logarithmically spaced values over the half-open interval `[base^start, base^stop)`.
+-   **X**: `[out] stdlib_complex64_t*` input array.
+-   **strideX**: `[in] CBLAS_INT` stride length.
+-   **offsetX**: `[in] CBLAS_INT` starting index.
+
+```c
+void stdlib_strided_clogspace_ndarray( const CBLAS_INT N, const float base, const stdlib_complex64_t start, const stdlib_complex64_t stop, const bool endpoint, stdlib_complex64_t *X, const CBLAS_INT strideX, const CBLAS_INT offsetX );
+```
+
+</section>
+
+<!-- /.usage -->
+
+<!-- C API usage notes. Make sure to keep an empty line after the `section` element and another before the `/section` close. -->
+
+<section class="notes">
+
+</section>
+
+<!-- /.notes -->
+
+<!-- C API usage examples. -->
+
+<section class="examples">
+
+### Examples
+
+```c
+#include "stdlib/blas/ext/base/clogspace.h"
+#include "stdlib/complex/float32/ctor.h"
+#include <stdio.h>
+#include <stdbool.h>
+
+int main( void ) {
+    // Create a strided array of interleaved real and imaginary components:
+    float x[] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+
+    // Specify the number of indexed elements:
+    const int N = 8;
+
+    // Specify a stride:
+    const int strideX = 1;
+
+    // Fill the array:
+    stdlib_strided_clogspace( N, 10.0f, stdlib_complex64( 0.0f, 0.0f ), stdlib_complex64( 2.0f, 0.0f ), true, (stdlib_complex64_t *)x, strideX );
+
+    // Print the result:
+    for ( int i = 0; i < N; i++ ) {
+        printf( "x[ %i ] = %f + %fi\n", i, x[ i*2 ], x[ (i*2)+1 ] );
+    }
+}
+```
+
+</section>
+
+<!-- /.examples -->
+
+</section>
+
+<!-- /.c -->
 
 <!-- Section for related `stdlib` packages. Do not manually edit this section, as it is automatically populated. -->
 
@@ -335,9 +450,9 @@ Copyright &copy; 2016-2026. The Stdlib [Authors][stdlib-authors].
 
 [stdlib-license]: https://raw.githubusercontent.com/stdlib-js/blas-ext-base-clogspace/main/LICENSE
 
-[@stdlib/array/complex64]: https://github.com/stdlib-js/array-complex64/tree/umd
+[@stdlib/array/complex64]: https://github.com/stdlib-js/array-complex64
 
-[@stdlib/complex/float32/ctor]: https://github.com/stdlib-js/complex-float32-ctor/tree/umd
+[@stdlib/complex/float32/ctor]: https://github.com/stdlib-js/complex-float32-ctor
 
 [mdn-typed-array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray
 
